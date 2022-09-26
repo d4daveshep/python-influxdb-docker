@@ -12,7 +12,6 @@ def random_temp(current_temp):
     return current_temp + direction * movement
 
 
-
 # You can generate an API token from the "API Tokens Tab" in the UI
 token = "my-super-secret-auth-token"
 # org = "my-org"
@@ -26,12 +25,12 @@ current_ambient_temp = 20.0
 with InfluxDBClient(url="http://localhost:8086", token=token, org=org) as client:
     write_api = client.write_api(write_options=SYNCHRONOUS)
 
-    for x in range(60):
-
+    # for x in range(60):
+    while (True):
         point = Point("temperature") \
             .tag("brew-id", "00-test-v00") \
-            .field("fermenter", current_fermenter_temp)\
-            .field("ambient", current_ambient_temp)\
+            .field("fermenter", current_fermenter_temp) \
+            .field("ambient", current_ambient_temp) \
             .time(datetime.utcnow(), WritePrecision.MS)
 
         print(point)
@@ -42,4 +41,4 @@ with InfluxDBClient(url="http://localhost:8086", token=token, org=org) as client
         current_ambient_temp = random_temp(current_ambient_temp)
         sleep(1)
 
-    client.close()
+    # client.close()
