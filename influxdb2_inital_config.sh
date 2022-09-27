@@ -13,6 +13,6 @@ docker run -d -p 8086:8086 \
       -e DOCKER_INFLUXDB_INIT_BUCKET=my-bucket \
       -e DOCKER_INFLUXDB_INIT_RETENTION=1w \
       -e DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-auth-token \
-      influxdb
+      influxdb:alpine
       
       

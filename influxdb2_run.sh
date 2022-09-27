@@ -6,6 +6,6 @@
 docker run -d -p 8086:8086 \
       -v $PWD/data:/var/lib/influxdb2 \
       -v $PWD/config:/etc/influxdb2 \
-      influxdb
+      influxdb:alpine
       
       

@@ -1,20 +1,24 @@
 version: "3"
 services:
   influxdb:
-    image: influxdb:2.3
+    image: influxdb:alpine
     volumes:
-      - /tmp/testdata/influx:/var/lib/influxdb2:rw  # map where data and config files are stored
+      - $PWD/config:/etc/influxdb2:rw
+      - $PWD/data:/var/lib/influxdb2:rw
     ports:
       - "8086:8086"
+    networks:
+      - mynet
 
-  influxdb-cli:
-    links:
-      - influxdb
-    image: influxdb:2.3
-    volumes:
-      - /tmp/testdata/influx:/var/lib/influxdb2:rw  # map where data and config files are stored
-    entrypoint: ["influx", "setup", "--skip-verify", "-f", "-u", "admin", "-p", "influxdb-admin", "-o", "daveshep.net.nz", "-b", "fermenter-temperature", "--host=http://influxdb:8086"]
-    restart: on-failure
+  data-generator:
+    build: .
+    command: python3 write_data_to_influxdb.py
     depends_on:
       - influxdb
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge
 
