@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 services:
   influxdb:
     image: influxdb:alpine
@@ -7,18 +7,12 @@ services:
       - $PWD/data:/var/lib/influxdb2:rw
     ports:
       - "8086:8086"
-    networks:
-      - mynet
 
   data-generator:
     build: .
     command: python3 write_data_to_influxdb.py
     depends_on:
       - influxdb
-    networks:
-      - mynet
-
-networks:
-  mynet:
-    driver: bridge
+    network_mode: "host"
+    restart: on-failure
 

@@ -22,6 +22,8 @@ bucket = "temp-test"
 current_fermenter_temp = 20.0
 current_ambient_temp = 20.0
 
+# sleep(10)
+
 with InfluxDBClient(url="http://localhost:8086", token=token, org=org) as client:
     write_api = client.write_api(write_options=SYNCHRONOUS)
 
