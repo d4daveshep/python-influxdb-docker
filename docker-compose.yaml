@@ -15,4 +15,5 @@ services:
       - influxdb
     network_mode: "host"
     restart: on-failure
+#    privileged: true # will need this for accessing the serial port on raspberry pi
 
